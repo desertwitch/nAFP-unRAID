@@ -1,0 +1,27 @@
+#!/bin/sh
+PROG="nafp"
+PLGPATH="/boot/config/plugins/$PROG"
+CONFIG=$PLGPATH/$PROG.cfg
+
+trap "exit 0" SIGTERM
+
+echo "Starting AFP services (disks_mounted)..." | logger
+
+if [ -e "$CONFIG" ]; then
+    source "$CONFIG"
+fi
+
+if [ "$SERVICE" == "enable" ]; then
+    TIMER=0
+    while [ ! -d /mnt/user ]
+    do
+        sleep 1
+        TIMER=$((TIMER+1))
+        if [ $TIMER -ge 30 ]; then
+            echo "AFP WARNING: /mnt/user never became available to open the AFP database." | logger
+            echo "AFP WARNING: This could lead to unexpected AFP behaviour, check for other logs." | logger
+            break
+        fi
+    done
+    /etc/rc.d/rc.nafp start 2>&1 | logger
+fi

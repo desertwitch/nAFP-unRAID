@@ -1,0 +1,35 @@
+#!/bin/sh
+BOOT="/boot/config/plugins/nafp"
+DOCROOT="/usr/local/emhttp/plugins/nafp"
+
+echo "Making sure all existing AFP services are stopped (before config reset)..."
+if [ -x /etc/rc.d/rc.nafp ]; then
+    /etc/rc.d/rc.nafp stop
+fi
+
+echo "Deleting existing configuration files and folders..."
+rm -f $BOOT/nafp.cfg
+rm -rf /etc/netatalk
+rm -rf $BOOT/netatalk
+
+echo "Recreating configuration folders..."
+if [ ! -d /etc/netatalk ]; then
+    mkdir /etc/netatalk
+fi
+
+if [ ! -d $BOOT/netatalk ]; then
+    mkdir $BOOT/netatalk
+fi
+
+echo "Pulling default configuration files from package..."
+cp -f $DOCROOT/default.cfg $BOOT/nafp.cfg
+cp -rf $DOCROOT/netatalk/* $BOOT/netatalk
+cp -rf $BOOT/netatalk/* /etc/netatalk
+
+echo "Setting up permissions on configuration locations..."
+chown root:root /etc/netatalk
+chmod 755 /etc/netatalk
+chown root:root /etc/netatalk/*
+chmod 644 /etc/netatalk/*
+
+echo "AFP configuration is now reset to defaults, reboot or reinstall plugin in case of any problems."

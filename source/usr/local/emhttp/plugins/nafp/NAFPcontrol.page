@@ -1,0 +1,123 @@
+Menu="NAFPsettings:1"
+Title="AFP Service Control"
+Tag="wrench"
+Markdown="false"
+---
+<?PHP
+/* Copyright 2017, Derek Macias.
+ * Copyright 2015, Dan Landon.
+ * Copyright 2015, Bergware International.
+ * Copyright 2015, Lime Technology
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2,
+ * as published by the Free Software Foundation.
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Modified by macester macecapri@gmail.com for NUT plugin
+ * Modified by desertwitch for AFP plugin
+ */
+
+require_once '/usr/local/emhttp/plugins/nafp/include/nafp_config.php'; ?>
+
+<form markdown="0" id="nafp-settings" name="nafp_settings" method="POST" action="/update.php" target="progressFrame">
+    <input type="hidden" name="#file" value="nafp/nafp.cfg">
+    <input type="hidden" id="command" name="#command" value="" />
+    <span style="float:right;margin-right:10px"><a href="https://netatalk.sourceforge.io/3.1/htmldocs/" target="_blank" title="AFP User Manual"><i class="fa fa-file-text-o"></i> <u>User Manual</u></a></span>
+
+    <dl>
+        <dt>Start AFP service:</dt>
+        <dd>
+            <select id="SERVICE" name="SERVICE" class="nafp-run" size="1">
+                <?=mk_option($nafp_service, "disable", "No");?>
+                <?=mk_option($nafp_service, "enable", "Yes");?>
+            </select>
+        </dd>
+    </dl>
+
+    <blockquote class="inline_help">
+        <p>Set to <strong>'Yes'</strong> to enable AFP, the service will start and stop with the array.</p>
+        <p>Set to <strong>'No'</strong> to disable AFP, the service will not start and stop with the array.</p>
+    </blockquote>
+
+    <dl>
+        <dt>
+            <input id="RESETCONF" class="nafp-run" type="button" value="Reset Config">
+            <input id="KILLAFP" type="button" value="Kill AFP" style="margin-bottom:8px;">
+            <input id="WIPEDB" type="button" value="Wipe DB" style="margin-bottom:8px;">
+        </dt>
+        <dd>
+            <input type="submit" id="btnApply" name="#apply" value="Apply">
+            <input type="button" value="Done" onclick="done()">
+            <input id="RESTART" type="button" value="Restart AFP" style="margin-bottom:8px;">
+        </dd>
+    </dl>
+    <br>
+    <blockquote class="inline_help">
+    <p><strong>Reset Config</strong> will return your AFP configuration to the defaults.</p>
+    <p><strong>Kill AFP</strong> will kill any hanging AFP instances preventing the array from stopping.</p>
+    <p><strong>Wipe DB</strong> will wipe the AFP database in case of performance or indexing problems.</p>
+    <p><strong>Restart AFP</strong> will restart the AFP service in case of any problems accessing the server.</p>
+    </blockquote>
+
+</form>
+
+<script src="<?=autov('/plugins/nafp/js/jquery.mask.min.js');?>"></script>
+
+<script>
+$(function() {
+
+    $('#RESETCONF').click(function() {
+        $('#command').val('');
+        openBox('/usr/local/emhttp/plugins/nafp/scripts/resetconf', 'AFP Configuration Reset', 600, 600, true);
+    });
+
+    $('form input:not([type="submit"])').keydown(function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    $('#btnApply').click(function(){
+        $('#nafp-settings').submit();
+    });
+
+    $('#RESTART').click(function(){ swal({title:"Are you sure?",text:"Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, Restart); });
+    $('#KILLAFP').click(function(){ swal({title:"Are you sure?",text:"AFP is shutdown automatically when the array is stopped.<br>Kill the AFP service only if you cannot stop your array normally!<br><br>Killing AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, KillAFP); });
+    $('#WIPEDB').click(function(){ swal({title:"Are you sure?",text:"This action will wipe AFP's CNID database, if you're having problems.<br>DB rebuilding can cause slower (or faster) AFP performance at first.<br><br>Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!",type:"warning",html:true,showCancelButton:true}, WipeDB); });
+    
+    $('#SERVICE').change(checkRUNNING);
+
+    checkRUNNING();
+
+});
+
+function checkRUNNING(){
+    if ("<?=$nafp_running;?>" == 1){
+        $('.nafp-run').prop('disabled', true);
+        $('#RESTART').prop('disabled', false);
+        $('#KILLAFP').prop('disabled', false);
+        $('#WIPEDB').prop('disabled', false);
+    }else{
+        $('.nafp-run').prop('disabled', false);
+        $('#RESTART').prop('disabled', true);
+        $('#KILLAFP').prop('disabled', true);
+        $('#WIPEDB').prop('disabled', true);
+    }
+}
+function KillAFP(){
+    $('#command').val('/usr/local/emhttp/plugins/nafp/scripts/kill');
+    $('#nafp-settings').submit();
+}
+function Restart(){
+    $('#command').val('/usr/local/emhttp/plugins/nafp/scripts/restart');
+    $('#nafp-settings').submit();
+}
+function WipeDB(){
+    $('#command').val('');
+    openBox('/usr/local/emhttp/plugins/nafp/scripts/wipedb', 'AFP Database Wipe', 600, 600, true);
+}
+</script>

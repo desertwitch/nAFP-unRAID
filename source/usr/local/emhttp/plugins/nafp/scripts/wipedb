@@ -1,0 +1,21 @@
+#!/bin/sh
+echo "Starting CNID database wipe..."
+
+if [ -d /mnt/user/system/nafp ]; then
+    echo "Making sure all existing AFP services are stopped (before db wipe)..."
+    /etc/rc.d/rc.nafp stop
+    sleep 3
+    echo "Deleting CNID database folder..."
+    rm -rf /mnt/user/system/nafp
+    echo "Recreating CNID database folder..."
+    mkdir /mnt/user/system/nafp
+    chown root:root /mnt/user/system/nafp
+    chmod 777 /mnt/user/system/nafp
+    echo "Restarting AFP service..."
+    /etc/rc.d/rc.nafp start
+else
+    echo "ERROR -- CNID database does not exist at: /mnt/user/system/nafp"
+    echo "Is the array stopped? If so, please start the array and retry this operation!"
+    echo "If you changed the DB location, manually delete AND re-create your DB folder."
+    echo "NOTE: The AFP service was not stopped and nothing else was done by this operation."
+fi

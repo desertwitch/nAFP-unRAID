@@ -1,0 +1,141 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "nafp">
+<!ENTITY author    "desertwitch">
+<!ENTITY version   "2023.09.01">
+<!ENTITY launch    "Settings/NAFPsettings">
+<!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/nAFP-unRAID/main">
+<!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
+<!ENTITY pkgURL    "&gitURL;/packages">
+<!ENTITY plgPATH   "/boot/config/plugins/&name;">
+<!ENTITY plgNAME   "nafp-2023.09.01-x86_64-1">
+<!ENTITY plgMD5    "5b32500bdf18edc15929013ca3b071be">
+<!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/">
+
+<CHANGES>
+## netatalk - AFP for UNRAID
+###2023.09.01
+- release note: welcome to the first version of the AFP package.
+- release note: please report any problems in the support topic.
+</CHANGES>
+
+<!--
+stop already existing services before doing anything
+-->
+<FILE Run="/bin/bash">
+<INLINE>
+echo "Making sure all existing AFP services are stopped (before install/upgrade)..."
+if [ -x /etc/rc.d/rc.nafp ]; then
+    if ! /etc/rc.d/rc.nafp stop >/dev/null 2>&amp;1; then
+        echo "WARNING:"
+        echo "WARNING: The AFP installation script was not able to stop the services gracefully."
+        echo "WARNING: IN CASE OF PROBLEMS, please REBOOT YOUR SYSTEM to complete any upgrades."
+        echo "WARNING:"
+    fi 
+fi
+exit 0
+</INLINE>
+</FILE>
+
+<!--
+install or upgrade dependency files
+-->
+
+<FILE Name="&plgPATH;/openldap-2.4.59-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/openldap-2.4.59-x86_64-1.txz</URL>
+<MD5>b3b4e18f947abf013c1dfbfa136803cd</MD5>
+</FILE>
+
+<FILE Name="&plgPATH;/netatalk-3.1.15-x86_64-1_slack15.0.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-3.1.15-x86_64-1_slack15.0.txz</URL>
+<MD5>7c7aab68c879a9284e1ee64b7c1df6fe</MD5>
+</FILE>
+
+<!--
+install or upgrade the plugin itself
+-->
+<FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&gitURL;/archive/&plgNAME;.txz</URL>
+<MD5>&plgMD5;</MD5>
+</FILE>
+
+<!--
+run the post-installation scripts
+-->
+<FILE Run="/bin/bash">
+<INLINE> 
+# Cleaning old plugin source files
+find &plgPATH;/ -type f -iname "&name;-plugin*.txz" ! -iname "*&plgNAME;*" -delete
+
+echo ""
+echo "-------------------------------------------------------------"
+echo " &name; &version; has been installed."
+echo " Copyright 2023 - &author;"
+echo "-------------------------------------------------------------"
+echo "!! Please RESTART YOUR ARRAY after UPDATING the AFP plugin !!"
+echo "!! If you did not update, thanks for installing and ENJOY. !!"
+echo "-------------------------------------------------------------"
+</INLINE>
+</FILE>
+
+<!--
+definition for uninstallation of the plugin
+-->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+echo "Making sure all existing AFP services are stopped (before uninstall)..."
+if [ -x /etc/rc.d/rc.nafp ]; then
+    if ! /etc/rc.d/rc.nafp stop >/dev/null 2>&amp;1; then
+        echo "WARNING:"
+        echo "WARNING: The AFP uninstallation script was not able to stop the services gracefully."
+        echo "WARNING: IN CASE OF PROBLEMS, please REBOOT YOUR SYSTEM to remove any remaining packages."
+        echo "WARNING:"
+    fi 
+fi
+
+# check if OpenLDAP is used by another plugin
+if [ `find /boot/config/plugins/*.plg -type f ! -iname "*&name;.plg*" | xargs grep "openldap" -sl` ]; then
+    echo "OpenLDAP in use by another plugin, will not be removed together with AFP."
+    rm -f &plgPATH;/openldap*.txz
+fi
+
+removepkg &plgPATH;/*.txz
+
+# clean up folders after the removed installation
+# in case of re-installation of package on live system
+
+rm -rf &plgPATH;
+rm -rf &emhttp;
+rm -rf /etc/netatalk
+
+rm -f /etc/avahi/services/netatalk.service
+
+if [ -d /mnt/user ]; then
+    if [ -d /mnt/user/system/nafp ]; then
+        rm -rf /mnt/user/system/nafp
+    fi
+else
+    echo ""
+    echo "WARNING: UNABLE TO REMOVE AFP DATABASE - IS THE ARRAY NOT STARTED?"
+    echo "WARNING: RUN 'WIPE DB' (FROM AFP GUI) IF RE-INSTALLING THE PLUGIN."
+    echo "WARNING:"
+    echo "WARNING: This is not a problem except for taking up disk space."
+    echo "WARNING: AFP database remains located at: /mnt/user/system/nafp"
+    echo ""
+fi
+ 
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " &name; &version; has been removed."
+echo " Copyright 2023 - &author;"
+echo "-----------------------------------------------------------"
+echo ""
+</INLINE>
+</FILE>
+
+</PLUGIN>

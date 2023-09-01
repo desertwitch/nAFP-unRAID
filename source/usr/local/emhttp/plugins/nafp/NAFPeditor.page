@@ -1,0 +1,123 @@
+Menu="NAFPsettings:2"
+Title="AFP Configuration"
+Tag="cog"
+Markdown="false"
+---
+<link rel="stylesheet" href="<?=autov('/plugins/nafp/css/codemirror/codemirror.min.css');?>">
+<link rel="stylesheet" href="<?=autov('/plugins/nafp/css/codemirror/dracula.min.css');?>">
+
+<style type="text/css">
+    .CodeMirror { border: 1px solid #eee; cursor: text; margin-top: 15px; margin-bottom: 10px; }
+    .CodeMirror pre.CodeMirror-placeholder { color: #999; }
+    .errortext {color: #EF3D47;display: none;}
+    .fileTree {color:#486dba;width:305px;max-height:150px;overflow:scroll;position:absolute;z-index:100;display:none;}
+</style>
+<link type="text/css" rel="stylesheet" href="<?=autov('/webGui/styles/jquery.filetree.css');?>">
+<span style="float:right;margin-right:10px"><a href="https://netatalk.sourceforge.io/3.1/htmldocs/afp.conf.5.html" target="_blank" title="AFP Configuration Manual"><i class="fa fa-file-text-o"></i> <u>Configuration Manual</u></a></span>
+<br>
+<dl>
+<dt>
+<div style="color:red">Do <strong><u>NOT</u></strong> define/configure your user shares with any locations <strong><u>/mnt/disk[...]</u></strong></div>
+<div style="color:green"><strong>Please always make sure to define your user shares with locations <u>/mnt/user/</u>[...]</strong></div>
+<br>
+<div><strong>You authenticate to AFP with your regular UNRAID user credentials.</strong></div>
+<div>By default all user accounts have access, you can limit this per share with 'valid users'.</div>
+<div>You only <u>need</u> to change the configuration file 'afp.conf', the others offer expert settings.</div>
+</dt>
+<dd>
+<strong>Configuration Examples:</strong>
+<pre>
+[photos]
+path = /mnt/user/photos
+time machine = yes
+
+[tvshows]
+path = /mnt/user/tvshows
+time machine = no
+valid users = Peter Sarah
+</pre>
+</dd>
+</dl>
+<blockquote class="inline_help">
+    <p>AFP configuration editor is used to set all configuration parameters.</p>
+</blockquote>
+
+<form id="editform" method="POST">
+<img id="editfolder" style="cursor:pointer;margin-left: 10px;" src="/webGui/images/explore.png" >
+
+<input id="editfile" type="text" name="editfile" value="" readonly="" data-picktop="/etc/netatalk" data-pickcloseonfile="true" data-pickfilter="conf" data-pickroot="/etc/netatalk" data-pickfolders="false" required="required" >
+
+<textarea id="editdata" name="editdata" placeholder="Select a configuration file to modify." autofocus></textarea>
+<input type="hidden" name="commit" value="1" />
+<dl>
+    <dt></dt>
+    <dd><input type="button" value="Save" id="btnSubmit" title="Save the configuration changes." />
+    <input type="button" value="Cancel" id="btnCancel" />
+    </dd>
+</form>
+</dl>
+
+<blockquote class="inline_help">
+    <p>The <strong>Save</strong> button saves any configuration changes made.</p>
+</blockquote>
+
+<script src="<?=autov('/plugins/nafp/js/codemirror/codemirror.min.js');?>"></script>
+
+<script src="<?=autov('/plugins/nafp/js/codemirror/autorefresh.min.js');?>"></script>
+
+<script src="<?=autov('/webGui/javascript/jquery.filetree.js');?>"></script>
+
+
+<script>
+$(function(){
+    $('#btnCancel').click(function() {
+        $.cookie('one', 'tab1', { expires:null, path: '/'});
+        location = '/Settings/NAFPsettings';
+    });
+
+    var editor = CodeMirror.fromTextArea($('#editdata')[0], {
+        theme: '<?=($display["theme"] == 'white' || $display["theme"] == 'azure') ? "default" : "dracula";?>',
+        mode: 'properties',
+        lineNumbers: true,
+        autoRefresh: true,
+        gutters: ['CodeMirror-linenumbers'],
+        extraKeys: {
+            'Ctrl-Space': 'autocomplete'
+        },
+        hintOptions: {}
+    });
+
+    editor.setSize(null, 600);
+
+    $('#tab2').click(function () {
+        editor.refresh();
+    });
+
+    $('#editfile').fileTreeAttach(null, null, function(file) {
+        $('#editfile').val(file);
+    });
+
+    $('#editfile').on('change', function () {
+        var Editfile = $('#editfile').val();
+        $.getJSON('/plugins/nafp/include/nafp_edit.php', {editfile: Editfile}, function (data) {
+                editor.setValue(data);
+            }
+        );
+    });
+
+    // save config
+    $('#btnSubmit').click(function () {
+        editor.save();
+        $.post('/plugins/nafp/include/nafp_save.php', $('#editform').serializeArray(), function (data) {
+            var Title = 'Configuration ';
+
+            if(data.success)
+                swal({title: Title+'Saved', text: data.saved+'\n\nIt will be active on array restart (or AFP restart).', timer: 3500, showConfirmButton: false, type:'success'
+                });
+            if(data.error)
+                swal({title:Title+'Error', text: data.error+'\n\nThere was an error saving the configuration file.', type:'error'});
+
+        }, 'json');
+    });
+});
+</script>

@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Stopping AFP services (stopping_svcs)..." | logger
+/etc/rc.d/rc.nafp stop 2>&1 | logger

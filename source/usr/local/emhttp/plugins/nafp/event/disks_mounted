@@ -17,7 +17,7 @@ if [ "$SERVICE" == "enable" ]; then
     do
         sleep 1
         TIMER=$((TIMER+1))
-        if [ $TIMER -ge 30 ]; then
+        if [ $TIMER -ge 20 ]; then
             echo "AFP WARNING: /mnt/user never became available to open the AFP database." | logger
             echo "AFP WARNING: This could lead to unexpected AFP behaviour, check for other logs." | logger
             break

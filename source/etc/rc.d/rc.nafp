@@ -31,7 +31,7 @@ netatalk_stop() {
       sleep 1
       killall netatalk
       TIMER=$((TIMER+1))
-      if [ $TIMER -ge 30 ]; then
+      if [ $TIMER -ge 15 ]; then
         echo "AFP WARNING: Hard-killing hanging 'netatalk' service..."
         killall -9 netatalk
         sleep 1
@@ -50,7 +50,7 @@ netatalk_stop() {
       sleep 1
       killall afpd
       TIMER=$((TIMER+1))
-      if [ $TIMER -ge 30 ]; then
+      if [ $TIMER -ge 15 ]; then
         echo "AFP WARNING: Hard-killing hanging 'afpd' service..."
         killall -9 afpd
         sleep 1
@@ -69,7 +69,7 @@ netatalk_stop() {
       sleep 1
       killall cnid_metad
       TIMER=$((TIMER+1))
-      if [ $TIMER -ge 30 ]; then
+      if [ $TIMER -ge 15 ]; then
         echo "AFP WARNING: Hard-killing hanging 'cnid_metad' service..."
         killall -9 cnid_metad
         sleep 1
@@ -88,7 +88,7 @@ netatalk_stop() {
       sleep 1
       killall cnid_dbd
       TIMER=$((TIMER+1))
-      if [ $TIMER -ge 30 ]; then
+      if [ $TIMER -ge 15 ]; then
         echo "AFP WARNING: Hard-killing hanging 'cnid_dbd' service..."
         killall -9 cnid_dbd
         sleep 1

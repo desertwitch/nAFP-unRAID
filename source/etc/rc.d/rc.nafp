@@ -24,9 +24,7 @@ netatalk_stop() {
   /usr/bin/pkill -f "^/usr/sbin/netatalk" 2> /dev/null
   sleep 3
 
-  NETAPID=$(/usr/bin/pgrep -f "^/usr/sbin/netatalk" 2> /dev/null)
- 
-  if [ $NETAPID ]; then
+  if [[ $(/usr/bin/pgrep -f "^/usr/sbin/netatalk" 2> /dev/null) ]]; then
     echo "AFP WARNING: Shutting down hanging 'netatalk' service..."
     TIMER=0
     while `killall netatalk 2>/dev/null`; do
@@ -42,9 +40,7 @@ netatalk_stop() {
     done
   fi
 
-  AFPDPID=$(/usr/bin/pgrep -f "^/usr/sbin/afpd" 2> /dev/null)
-
-  if [ $AFPDPID ]; then
+  if [[ $(/usr/bin/pgrep -f "^/usr/sbin/afpd" 2> /dev/null) ]]; then
     echo "AFP WARNING: Shutting down hanging 'afpd' service..."
     /usr/bin/pkill -f "^/usr/sbin/afpd" 2> /dev/null
     sleep 3
@@ -63,9 +59,7 @@ netatalk_stop() {
     done
   fi
 
-  CNID1PID=$(/usr/bin/pgrep -f "^/usr/sbin/cnid_metad" 2> /dev/null)
-
-  if [ $CNID1PID ]; then
+  if [[ $(/usr/bin/pgrep -f "^/usr/sbin/cnid_metad" 2> /dev/null) ]]; then
     echo "AFP WARNING: Shutting down hanging 'cnid_metad' service..."
     /usr/bin/pkill -f "^/usr/sbin/cnid_metad" 2> /dev/null
     sleep 3
@@ -84,9 +78,7 @@ netatalk_stop() {
     done
   fi
 
-  CNID2PID=$(/usr/bin/pgrep -f "^/usr/sbin/cnid_dbd" 2> /dev/null)
-
-  if [ $CNID2PID ]; then
+  if [[ $(/usr/bin/pgrep -f "^/usr/sbin/cnid_dbd" 2> /dev/null) ]]; then
     echo "AFP WARNING: Shutting down hanging 'cnid_dbd' service..."
     /usr/bin/pkill -f "^/usr/sbin/cnid_dbd" 2> /dev/null
     sleep 3

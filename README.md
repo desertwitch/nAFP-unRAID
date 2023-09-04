@@ -10,7 +10,7 @@ This plugin is based on and inspired by the NUT plugin, please also check it out
 
 https://forums.unraid.net/topic/60217-plugin-nut-v2-network-ups-tools/
 
-Copyrights NUT: macester, gfjardim, dmacias72, SimonF
+Copyrights NUT for UNRAID (frontend): macester, gfjardim, dmacias72, SimonF
 
 Copyrights UNRAID Plugin System: Dan Landon, Bergware International, Lime Technology 
 

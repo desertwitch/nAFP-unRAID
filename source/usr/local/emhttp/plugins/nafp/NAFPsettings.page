@@ -5,7 +5,7 @@ Icon="apple"
 Tag="apple"
 Markdown="false"
 ---
-<span style="float:right;margin-right:10px"><a href="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/" target="_blank" title="AFP Configuration Manual"><i class="fa fa-medkit"></i> <u>Support Thread</u></a></span>
+<span style="float:right;margin-right:10px"><a href="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/" target="_blank" title="AFP Support Thread"><i class="fa fa-medkit"></i> <u>Support Thread</u></a></span>
 <div>While the utmost care and testing has been put into the development of this <strong>experimental addon</strong>, please be advised:</div>
 <div>AFP is a <strong>deprecated legacy protocol</strong> which was removed from UNRAID for a reason, it is no longer supported officially.</div>
 <br>

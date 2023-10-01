@@ -18,6 +18,8 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2023.10.01
+- new: updated AFP backend to netatalk 3.1.17 (upstream bugfixes)
 ###2023.09.02
 - fix: cleaning of old files from USB drive
 - new: reduce wait times for stuck AFP processes
@@ -53,9 +55,9 @@ install or upgrade dependency files
 <MD5>b3b4e18f947abf013c1dfbfa136803cd</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/netatalk-3.1.15-x86_64-1_slack15.0.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/netatalk-3.1.15-x86_64-1_slack15.0.txz</URL>
-<MD5>7c7aab68c879a9284e1ee64b7c1df6fe</MD5>
+<FILE Name="&plgPATH;/netatalk-3.1.17-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-3.1.17-x86_64-1.txz</URL>
+<MD5>28303c587ac7959bc5a9a16483b7c3e7</MD5>
 </FILE>
 
 <!--

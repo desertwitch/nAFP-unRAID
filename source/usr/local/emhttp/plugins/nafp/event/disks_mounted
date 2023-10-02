@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 PROG="nafp"
 PLGPATH="/boot/config/plugins/$PROG"
 CONFIG=$PLGPATH/$PROG.cfg

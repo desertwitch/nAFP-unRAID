@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Start/stop/restart the netatalk daemon.
 
 PROG="nafp"
@@ -27,7 +27,7 @@ netatalk_stop() {
   if [[ $(/usr/bin/pgrep -f "^/usr/sbin/netatalk" 2> /dev/null) ]]; then
     echo "AFP WARNING: Shutting down hanging 'netatalk' service..."
     TIMER=0
-    while `killall netatalk 2>/dev/null`; do
+    while killall netatalk 2>/dev/null; do
       sleep 1
       killall netatalk
       TIMER=$((TIMER+1))
@@ -46,7 +46,7 @@ netatalk_stop() {
     sleep 3
 
     TIMER=0
-    while `killall afpd 2>/dev/null`; do
+    while killall afpd 2>/dev/null; do
       sleep 1
       killall afpd
       TIMER=$((TIMER+1))
@@ -65,7 +65,7 @@ netatalk_stop() {
     sleep 3
 
     TIMER=0
-    while `killall cnid_metad 2>/dev/null`; do
+    while killall cnid_metad 2>/dev/null; do
       sleep 1
       killall cnid_metad
       TIMER=$((TIMER+1))
@@ -84,7 +84,7 @@ netatalk_stop() {
     sleep 3
 
     TIMER=0
-    while `killall cnid_dbd 2>/dev/null`; do
+    while killall cnid_dbd 2>/dev/null; do
       sleep 1
       killall cnid_dbd
       TIMER=$((TIMER+1))
@@ -108,7 +108,7 @@ netatalk_restart() {
 # Check if netatalk is running
 netatalk_status() {
   PID="$(/usr/bin/pgrep -f "^/usr/sbin/netatalk" 2> /dev/null)"
-  if [ $PID ]; then
+  if [ "$PID" ]; then
     echo "AFP service is running.  PID: $PID"
   else
     echo "AFP service is stopped."

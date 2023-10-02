@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo "Starting CNID database wipe..."
 
 if [ -d /mnt/user/system/nafp ]; then

@@ -1,3 +1,3 @@
-#!/bin/sh
+#!/bin/bash
 echo "Restarting AFP services..."
 /etc/rc.d/rc.nafp restart | logger

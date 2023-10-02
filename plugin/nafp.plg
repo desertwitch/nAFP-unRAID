@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2023.10.02
+- new: reworked shell scripts to better (security) standards
+- new: added AFP backends for future UNRAID versions 6.13+
 ###2023.10.01
 - new: updated AFP backend to netatalk 3.1.17 (upstream bugfixes)
 ###2023.09.02
@@ -50,13 +53,23 @@ exit 0
 install or upgrade dependency files
 -->
 
-<FILE Name="&plgPATH;/openldap-2.4.59-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/openldap-2.4.59-x86_64-1.txz</URL>
+<FILE Name="&plgPATH;/openldap-2.6.6-x86_64-2_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
+<URL>&pkgURL;/openldap-2.6.6-x86_64-2_slack15.1.txz</URL>
+<MD5>783e97db119f99bbf0c7680323456904</MD5>
+</FILE>
+
+<FILE Name="&plgPATH;/netatalk-3.1.17-x86_64-1_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-3.1.17-x86_64-1_slack15.1.txz</URL>
+<MD5>436ec49d3a5a5150cd1892c8e9503b58</MD5>
+</FILE>
+
+<FILE Name="&plgPATH;/openldap-2.4.59-x86_64-1_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
+<URL>&pkgURL;/openldap-2.4.59-x86_64-1_slack15.0.txz</URL>
 <MD5>b3b4e18f947abf013c1dfbfa136803cd</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/netatalk-3.1.17-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/netatalk-3.1.17-x86_64-1.txz</URL>
+<FILE Name="&plgPATH;/netatalk-3.1.17-x86_64-1_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-3.1.17-x86_64-1_slack15.0.txz</URL>
 <MD5>28303c587ac7959bc5a9a16483b7c3e7</MD5>
 </FILE>
 
@@ -103,7 +116,7 @@ if [ -x /etc/rc.d/rc.nafp ]; then
 fi
 
 # check if OpenLDAP is used by another plugin
-if [ `find /boot/config/plugins/*.plg -type f ! -iname "*&name;.plg*" | xargs grep "openldap" -sl` ]; then
+if [ "$(find /boot/config/plugins/*.plg -type f ! -iname "*&name;.plg*" | xargs grep "openldap" -sl)" ]; then
     echo "OpenLDAP in use by another plugin, will not be removed together with AFP."
     rm -f &plgPATH;/openldap*.txz
 fi

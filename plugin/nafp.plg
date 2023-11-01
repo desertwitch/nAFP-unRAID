@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "nafp">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2023.10.02">
+<!ENTITY version   "2023.11.01">
 <!ENTITY launch    "Settings/NAFPsettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/nAFP-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
@@ -18,6 +18,8 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2023.11.01
+- new: updated AFP backends to netatalk 3.1.18 (upstream security fixes)
 ###2023.10.02
 - new: reworked shell scripts to better (security) standards
 - new: added AFP backends for future UNRAID versions 6.13+
@@ -58,9 +60,9 @@ install or upgrade dependency files
 <MD5>783e97db119f99bbf0c7680323456904</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/netatalk-3.1.17-x86_64-1_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
-<URL>&pkgURL;/netatalk-3.1.17-x86_64-1_slack15.1.txz</URL>
-<MD5>436ec49d3a5a5150cd1892c8e9503b58</MD5>
+<FILE Name="&plgPATH;/netatalk-3.1.18-x86_64-1_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-3.1.18-x86_64-1_slack15.1.txz</URL>
+<MD5>f8627f4c5162f837eb3ca6cfa605e848</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/openldap-2.4.59-x86_64-1_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
@@ -68,9 +70,9 @@ install or upgrade dependency files
 <MD5>b3b4e18f947abf013c1dfbfa136803cd</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/netatalk-3.1.17-x86_64-1_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
-<URL>&pkgURL;/netatalk-3.1.17-x86_64-1_slack15.0.txz</URL>
-<MD5>28303c587ac7959bc5a9a16483b7c3e7</MD5>
+<FILE Name="&plgPATH;/netatalk-3.1.18-x86_64-1_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-3.1.18-x86_64-1_slack15.0.txz</URL>
+<MD5>3067ed6151e520d10283a1e57f0f26a8</MD5>
 </FILE>
 
 <!--

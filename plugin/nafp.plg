@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "nafp">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2023.11.01">
+<!ENTITY version   "2024.03.02">
 <!ENTITY launch    "Settings/NAFPsettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/nAFP-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2024.03.02
+- fix: important backend preparations for future UNRAID versions 6.13+
+- fix: important dependencies preparations for future UNRAID versions 6.13+
 ###2023.11.01
 - new: updated AFP backends to netatalk 3.1.18 (upstream security fixes)
 ###2023.10.02
@@ -55,14 +58,9 @@ exit 0
 install or upgrade dependency files
 -->
 
-<FILE Name="&plgPATH;/openldap-2.6.6-x86_64-2_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
-<URL>&pkgURL;/openldap-2.6.6-x86_64-2_slack15.1.txz</URL>
-<MD5>783e97db119f99bbf0c7680323456904</MD5>
-</FILE>
-
-<FILE Name="&plgPATH;/netatalk-3.1.18-x86_64-1_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
-<URL>&pkgURL;/netatalk-3.1.18-x86_64-1_slack15.1.txz</URL>
-<MD5>f8627f4c5162f837eb3ca6cfa605e848</MD5>
+<FILE Name="&plgPATH;/netatalk-3.1.18-x86_64-2_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-3.1.18-x86_64-2_slack15.1.txz</URL>
+<MD5>0f4f8855029631e1e942c9779c08a782</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/openldap-2.4.59-x86_64-1_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
@@ -93,12 +91,13 @@ find &plgPATH;/ -type f -iname "&name;*.txz" ! -iname "*&plgNAME;*" -delete
 
 echo ""
 echo "-------------------------------------------------------------"
-echo " &name; &version; has been installed."
+echo " netatalk - AFP for UNRAID (&version;) has been installed."
 echo " Copyright 2023 - &author;"
 echo "-------------------------------------------------------------"
 echo "!! Please RESTART YOUR ARRAY after UPDATING the AFP plugin !!"
 echo "!! If you did not update, thanks for installing and ENJOY. !!"
 echo "-------------------------------------------------------------"
+echo ""
 </INLINE>
 </FILE>
 
@@ -151,7 +150,7 @@ fi
 
 echo ""
 echo "-----------------------------------------------------------"
-echo " &name; &version; has been removed."
+echo " netatalk - AFP for UNRAID (&version;) has been removed."
 echo " Copyright 2023 - &author;"
 echo "-----------------------------------------------------------"
 echo ""

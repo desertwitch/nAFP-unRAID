@@ -67,34 +67,6 @@ require_once '/usr/local/emhttp/plugins/nafp/include/nafp_config.php'; ?>
 <script src="<?=autov('/plugins/nafp/js/jquery.mask.min.js');?>"></script>
 
 <script>
-$(function() {
-
-    $('#RESETCONF').click(function() {
-        $('#command').val('');
-        openBox('/usr/local/emhttp/plugins/nafp/scripts/resetconf', 'AFP Configuration Reset', 600, 600, true);
-    });
-
-    $('form input:not([type="submit"])').keydown(function(e) {
-        if (e.keyCode == 13) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    $('#btnApply').click(function(){
-        $('#nafp-settings').submit();
-    });
-
-    $('#RESTART').click(function(){ swal({title:"Are you sure?",text:"Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, Restart); });
-    $('#KILLAFP').click(function(){ swal({title:"Are you sure?",text:"AFP is shutdown automatically when the array is stopped.<br>Kill the AFP service only if you cannot stop your array normally!<br><br>Killing AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, KillAFP); });
-    $('#WIPEDB').click(function(){ swal({title:"Are you sure?",text:"This action will wipe AFP's CNID database, if you're having problems.<br>DB rebuilding can cause slower (or faster) AFP performance at first.<br><br>Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!",type:"warning",html:true,showCancelButton:true}, WipeDB); });
-    
-    $('#SERVICE').change(checkRUNNING);
-
-    checkRUNNING();
-
-});
-
 function checkRUNNING(){
     if ("<?=$nafp_running;?>" == 1){
         $('.nafp-run').prop('disabled', true);
@@ -120,4 +92,38 @@ function WipeDB(){
     $('#command').val('');
     openBox('/usr/local/emhttp/plugins/nafp/scripts/wipedb', 'AFP Database Wipe', 600, 600, true);
 }
+function ResetConfig(){
+    $('#command').val('');
+    openBox('/usr/local/emhttp/plugins/nafp/scripts/resetconf', 'AFP Configuration Reset', 600, 600, true);
+}
+$(function() {
+
+    $('form input:not([type="submit"])').keydown(function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    $('#btnApply').click(function(){
+        $('#nafp-settings').submit();
+    });
+
+    if (typeof swal === "function") { 
+        $('#RESTART').click(function(){ swal({title:"Are you sure?",text:"Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, Restart); });
+        $('#KILLAFP').click(function(){ swal({title:"Are you sure?",text:"AFP is shutdown automatically when the array is stopped.<br>Kill the AFP service only if you cannot stop your array normally!<br><br>Killing AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, KillAFP); });
+        $('#WIPEDB').click(function(){ swal({title:"Are you sure?",text:"This action will wipe AFP's CNID database, if you're having problems.<br>DB rebuilding can cause slower (or faster) AFP performance at first.<br><br>Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!",type:"warning",html:true,showCancelButton:true}, WipeDB); });
+        $('#RESETCONF').click(function(){ swal({title:"Are you sure?",text:"This action will return any existing AFP configuration to their defaults!",type:"warning",html:true,showCancelButton:true}, ResetConfig); });
+    } else {
+        $('#RESTART').click(Restart);
+        $('#KILLAFP').click(KillAFP);
+        $('#WIPEDB').click(WipeDB);
+        $('#RESETCONF').click(ResetConfig);
+    }
+
+    $('#SERVICE').change(checkRUNNING);
+
+    checkRUNNING();
+
+});
 </script>

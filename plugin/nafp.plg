@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "nafp">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.03.02">
+<!ENTITY version   "2024.03.09">
 <!ENTITY launch    "Settings/NAFPsettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/nAFP-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "nafp-2023.10.02-x86_64-1">
-<!ENTITY plgMD5    "32e809f41b98dc6d4b17c1275692c959">
+<!ENTITY plgNAME   "nafp-2024.03.09-x86_64-1">
+<!ENTITY plgMD5    "1fb322395e6a3d9a40d757223260cf3c">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -18,7 +18,7 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
-###2024.03.02
+###2024.03.09
 - fix: important backend preparations for future UNRAID versions 6.13+
 - fix: important dependencies preparations for future UNRAID versions 6.13+
 ###2023.11.01

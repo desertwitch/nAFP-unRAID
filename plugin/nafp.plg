@@ -86,9 +86,6 @@ run the post-installation scripts
 -->
 <FILE Run="/bin/bash">
 <INLINE> 
-# Cleaning old plugin source files
-find &plgPATH;/ -type f -iname "&name;*.txz" ! -iname "*&plgNAME;*" -delete
-
 echo ""
 echo "-------------------------------------------------------------"
 echo " netatalk - AFP for UNRAID (&version;) has been installed."

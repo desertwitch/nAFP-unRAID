@@ -16,4 +16,4 @@ Copyrights UNRAID Plugin System: Dan Landon, Bergware International, Lime Techno
 
 This project continues to be licensed under GPL2 and/or GPL3 - see LICENSE files for information!
 
-netatalk Source Code: https://github.com/Netatalk/netatalk
+<sub>netatalk Source Code: https://github.com/Netatalk/netatalk</sub>

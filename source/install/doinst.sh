@@ -3,9 +3,9 @@ BOOT="/boot/config/plugins/nafp"
 DOCROOT="/usr/local/emhttp/plugins/nafp"
 
 # Update file permissions of scripts
-chmod +0755 $DOCROOT/scripts/*
-chmod +0755 $DOCROOT/event/*
-chmod +0755 /etc/rc.d/rc.nafp
+chmod 755 $DOCROOT/scripts/*
+chmod 755 $DOCROOT/event/*
+chmod 755 /etc/rc.d/rc.nafp
 
 # copy the default
 cp -n $DOCROOT/default.cfg $BOOT/nafp.cfg >/dev/null 2>&1

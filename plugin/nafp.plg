@@ -14,7 +14,7 @@
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/" min="6.10.0" max="6.12.10">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/" min="6.10.0" max="7.0.0-beta.2">
 
 <CHANGES>
 ## netatalk - AFP for UNRAID

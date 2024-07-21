@@ -1,5 +1,5 @@
 # netatalk - AFP for UNRAID (6.10.0 - 7.0.0-beta.2)
-### THIS PLUGIN HAS BEEN DEPRECATED AND IS NO LONGER UPDATED
+### THIS PLUGIN HAS BEEN DEPRECATED AND IS NO LONGER MAINTAINED
 
 A plugin that integrates the legacy AFP file sharing protocol into newer UNRAID versions.
 

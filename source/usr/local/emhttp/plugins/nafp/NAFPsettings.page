@@ -16,12 +16,8 @@ Markdown="false"
 $(function() {
     showStatus('netatalk');
 
-    // dynamix plugin update api
-    <?if (function_exists('plugin_update_available') && $version = plugin_update_available('nafp')):?>
-        showNotice('AFP <?=htmlspecialchars($version);?> available. <a>Update</a>','nafp');
-        $('#user-notice a').on('click', function () {
-        $('#user-notice').empty();
-    });
-    <?endif;?>
+    if ( typeof caPluginUpdateCheck === "function" ) {
+        caPluginUpdateCheck("nafp.plg",{name:"AFP"});
+    }
 });
 </script>

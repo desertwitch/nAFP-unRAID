@@ -14,10 +14,14 @@
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/" min="6.10.0" max="7.0.0-beta.2">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/" min="6.10.0">
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2024.09.13
+- fix: made optical changes regarding wording, positioning and helptexts on the AFP Settings page
+- fix: improved script security by handling of leading and trailing whitespaces in configurational values
+- new: use of plugin usage metric functions to aid development of new features and planning for plugin updates (toggleable)
 ###2024.07.21
 - fix: updated plugin definition file for version compatibilities
 - deprecation notice: this plugin will be deprecated in the future
@@ -55,6 +59,7 @@ if [ -x /etc/rc.d/rc.nafp ]; then
         echo "WARNING:"
     fi 
 fi
+killall afp-poller >/dev/null 2>&amp;1
 exit 0
 </INLINE>
 </FILE>
@@ -117,6 +122,7 @@ if [ -x /etc/rc.d/rc.nafp ]; then
         echo "WARNING:"
     fi 
 fi
+killall afp-poller >/dev/null 2>&amp;1
 
 # check if OpenLDAP is used by another plugin
 if [ "$(find /boot/config/plugins/*.plg -type f ! -iname "*&name;.plg*" | xargs grep "openldap" -sl)" ]; then
@@ -134,6 +140,7 @@ rm -rf &emhttp;
 rm -rf /etc/netatalk
 
 rm -f /etc/avahi/services/netatalk.service
+rm -f /etc/cron.daily/afp-poller >/dev/null 2>&amp;1
 
 if [ -d /mnt/user ]; then
     if [ -d /mnt/user/system/nafp ]; then

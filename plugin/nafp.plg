@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "nafp">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.09.13">
+<!ENTITY version   "2024.09.13a">
 <!ENTITY launch    "Settings/NAFPsettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/nAFP-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "nafp-2024.09.13-x86_64-1">
-<!ENTITY plgMD5    "879866db7afb657696811c68012b4ff1">
+<!ENTITY plgNAME   "nafp-2024.09.13-x86_64-2">
+<!ENTITY plgMD5    "968427874b4226714a8684a91f388b97">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -18,7 +18,7 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
-###2024.09.13
+###2024.09.13a
 - fix: made optical changes regarding wording, positioning and helptexts on the AFP Settings page
 - fix: improved script security by handling of leading and trailing whitespaces in configurational values
 - new: use of plugin usage metric functions to aid development of new features and planning for plugin updates (toggleable)

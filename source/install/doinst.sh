@@ -30,7 +30,6 @@ cp -rf $BOOT/netatalk/* /etc/netatalk >/dev/null 2>&1
 rm -f /etc/cron.daily/afp-poller >/dev/null 2>&1
 ln -sf /usr/local/emhttp/plugins/nafp/scripts/poller /etc/cron.daily/afp-poller >/dev/null 2>&1
 chmod +x /etc/cron.daily/afp-poller >/dev/null 2>&1
-/etc/cron.daily/afp-poller conntest >/dev/null 2>&1 &
 
 # set up permissions
 if [ -d /etc/netatalk ]; then

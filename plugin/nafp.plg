@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "nafp">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.09.13a">
+<!ENTITY version   "2024.09.13b">
 <!ENTITY launch    "Settings/NAFPsettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/nAFP-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "nafp-2024.09.13-x86_64-2">
-<!ENTITY plgMD5    "968427874b4226714a8684a91f388b97">
+<!ENTITY plgNAME   "nafp-2024.09.13-x86_64-3">
+<!ENTITY plgMD5    "1c71840df80c8462bb4e20598714f9d3">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -18,6 +18,8 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2024.09.13b
+- important fix: address possible flock condition causing installation script to stall (thanks AgentXXL)
 ###2024.09.13a
 - fix: made optical changes regarding wording, positioning and helptexts on the AFP Settings page
 - fix: improved script security by handling of leading and trailing whitespaces in configurational values
@@ -96,6 +98,7 @@ run the post-installation scripts
 -->
 <FILE Run="/bin/bash">
 <INLINE> 
+/etc/cron.daily/afp-poller conntest >/dev/null 2>&amp;1 &amp;
 echo ""
 echo "-------------------------------------------------------------"
 echo " netatalk - AFP for UNRAID has been installed."

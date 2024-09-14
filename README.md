@@ -1,11 +1,8 @@
-# netatalk - AFP for UNRAID (6.10.0 - 7.0.0-beta.2)
-### THIS PLUGIN HAS BEEN DEPRECATED AND IS NO LONGER MAINTAINED
+# netatalk - AFP for UNRAID
+_A plugin that integrates the legacy AFP file sharing protocol into newer UNRAID versions._
 
-A plugin that integrates the legacy AFP file sharing protocol into newer UNRAID versions.
-
-Copyrights NUT for UNRAID (frontend): macester, gfjardim, dmacias72, SimonF
-
-Copyrights UNRAID / UNRAID Plugin System: Dan Landon, Bergware International, Lime Technology 
+![GitHub Tag](https://img.shields.io/github/v/tag/desertwitch/nAFP-unRAID?label=release&color=peru)
+[![CodeFactor](https://www.codefactor.io/repository/github/desertwitch/nafp-unraid/badge)](https://www.codefactor.io/repository/github/desertwitch/nafp-unraid)
 
 This project continues to be licensed under GPL2 and/or GPL3 - see LICENSE files for information!
 

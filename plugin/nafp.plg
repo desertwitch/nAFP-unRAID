@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "nafp">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.09.13b">
+<!ENTITY version   "2024.09.16">
 <!ENTITY launch    "Settings/NAFPsettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/nAFP-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "nafp-2024.09.13-x86_64-3">
-<!ENTITY plgMD5    "1c71840df80c8462bb4e20598714f9d3">
+<!ENTITY plgNAME   "nafp-2024.09.16-x86_64-1">
+<!ENTITY plgMD5    "50449db32c08e3be32f79dc9433ca138">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 

@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2024.09.16
+- fix: reworked bash scripts to better standards with more safety for strange configurational states
+- release note: due to continued interest this plugin will NOT BE DEPRECATED as previously announced
 ###2024.09.13b
 - important fix: address possible flock condition causing installation script to stall (thanks AgentXXL)
 ###2024.09.13a
@@ -26,9 +29,6 @@
 - new: use of plugin usage metric functions to aid development of new features and planning for plugin updates (toggleable)
 ###2024.07.21
 - fix: updated plugin definition file for version compatibilities
-- deprecation notice: this plugin will be deprecated in the future
-- deprecation notice: it is recommended to switch to modern protocols
-- deprecation notice: the last supported OS version will be 7.0.0-beta.2
 ###2024.03.09
 - fix: important backend preparations for future UNRAID versions 6.13+
 - fix: important dependencies preparations for future UNRAID versions 6.13+

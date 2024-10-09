@@ -47,7 +47,7 @@ valid users = Peter Sarah
 
 <input id="editfile" type="text" name="editfile" value="" readonly="" data-picktop="/etc/netatalk" data-pickcloseonfile="true" data-pickfilter="conf" data-pickroot="/etc/netatalk" data-pickfolders="false" required="required" >
 
-<textarea id="editdata" name="editdata" placeholder="Select a configuration file to modify." autofocus></textarea>
+<textarea id="editdata" name="editdata" placeholder="Select a configuration file to modify."></textarea>
 <input type="hidden" name="commit" value="1" />
 <dl>
     <dt></dt>

@@ -4,31 +4,40 @@ Tag="wrench"
 Markdown="false"
 ---
 <?PHP
-/* Copyright 2017, Derek Macias.
- * Copyright 2015, Dan Landon.
- * Copyright 2015, Bergware International.
- * Copyright 2015, Lime Technology
+/* Copyright Derek Macias (parts of code from NUT package)
+ * Copyright macester (parts of code from NUT package)
+ * Copyright gfjardim (parts of code from NUT package)
+ * Copyright SimonF (parts of code from NUT package)
+ * Copyright Dan Landon (parts of code from Web GUI)
+ * Copyright Bergware International (parts of code from Web GUI)
+ * Copyright Lime Technology (any and all other parts of Unraid)
+ *
+ * Copyright desertwitch (as author and maintainer of this file)
  *
  * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2,
+ * modify it under the terms of the GNU General Public License 2
  * as published by the Free Software Foundation.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
  *
- * Modified by macester macecapri@gmail.com for NUT plugin
- * Modified by desertwitch for AFP plugin
  */
-
 require_once '/usr/local/emhttp/plugins/nafp/include/nafp_config.php'; ?>
 
 <form markdown="0" id="nafp-settings" name="nafp_settings" method="POST" action="/update.php" target="progressFrame">
     <input type="hidden" name="#file" value="nafp/nafp.cfg">
     <input type="hidden" id="command" name="#command" value="" />
-    <span style="float:right;margin-right:10px"><a href="https://netatalk.sourceforge.io/3.1/htmldocs/" target="_blank" title="AFP User Manual"><i class="fa fa-file-text-o"></i> <u>User Manual</u></a></span>
+    <span style="float:right;margin-right:10px"><a href="https://netatalk.io/stable/htmldocs/" target="_blank" title="AFP User Manual"><i class="fa fa-file-text-o"></i> <u>User Manual</u></a></span>
 
     <dl>
-        <dt>Start AFP service:</dt>
+        <dt>AFP Backend:</dt>
+        <dd>
+            <strong><?= isset($nafp_installed_backend) && $nafp_installed_backend ? $nafp_installed_backend : "n/a" ?></strong>
+        </dd>
+    </dl>
+
+    <dl>
+        <dt>Start AFP Service:</dt>
         <dd>
             <select id="SERVICE" name="SERVICE" class="nafp-run" size="1">
                 <?=mk_option($nafp_service, "disable", "No");?>
@@ -55,7 +64,7 @@ require_once '/usr/local/emhttp/plugins/nafp/include/nafp_config.php'; ?>
     <blockquote class="inline_help">
         <p>Enables collection of <strong>anonymized</strong> plugin usage statistics through the plugin usage metrics API.</p>
         <p>This aids prioritization of bug reports, development of new features and planning for plugin updates/deprecation.</p>
-        <p><em>Attributes: Metric ID, Plugin Version, Unraid Version, AFP Backend Version, AFP Process Active (Yes/No).</em></p> 
+        <p><em>Attributes: Metric ID, Plugin Version, Unraid Version, AFP Backend Version, AFP Process Active (Yes/No).</em></p>
         <p><strong><i class="fa fa-heart" style="color:red;"></i> If possible, please keep this setting <u>enabled</u> to support the continued development of this plugin - thank you!</strong></p>
     </blockquote>
 
@@ -71,7 +80,7 @@ require_once '/usr/local/emhttp/plugins/nafp/include/nafp_config.php'; ?>
             <input id="RESTART" type="button" value="Restart AFP" style="margin-bottom:8px;">
         </dd>
     </dl>
-    <br>
+
     <blockquote class="inline_help">
     <p><strong>Reset Config</strong> will return your AFP configuration to the defaults.</p>
     <p><strong>Kill AFP</strong> will kill any hanging AFP instances preventing the array from stopping.</p>
@@ -81,16 +90,14 @@ require_once '/usr/local/emhttp/plugins/nafp/include/nafp_config.php'; ?>
 
 </form>
 
-<script src="<?=autov('/plugins/nafp/js/jquery.mask.min.js');?>"></script>
-
 <script>
 function checkRUNNING(){
-    if ("<?=$nafp_running;?>" == 1){
+    if ("<?=$nafp_running;?>" == 1) {
         $('.nafp-run').prop('disabled', true);
         $('#RESTART').prop('disabled', false);
         $('#KILLAFP').prop('disabled', false);
         $('#WIPEDB').prop('disabled', false);
-    }else{
+    } else {
         $('.nafp-run').prop('disabled', false);
         $('#RESTART').prop('disabled', true);
         $('#KILLAFP').prop('disabled', true);
@@ -101,7 +108,7 @@ function KillAFP(){
     $('#command').val('/usr/local/emhttp/plugins/nafp/scripts/kill');
     $('#nafp-settings').submit();
 }
-function Restart(){
+function RestartAFP(){
     $('#command').val('/usr/local/emhttp/plugins/nafp/scripts/restart');
     $('#nafp-settings').submit();
 }
@@ -114,33 +121,19 @@ function ResetConfig(){
     openBox('/usr/local/emhttp/plugins/nafp/scripts/resetconf', 'AFP Configuration Reset', 600, 600, true);
 }
 $(function() {
-
-    $('form input:not([type="submit"])').keydown(function(e) {
-        if (e.keyCode == 13) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    $('#btnApply').click(function(){
-        $('#nafp-settings').submit();
-    });
-
-    if (typeof swal === "function") { 
-        $('#RESTART').click(function(){ swal({title:"Are you sure?",text:"Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, Restart); });
+    if (typeof swal === "function") {
+        $('#RESTART').click(function(){ swal({title:"Are you sure?",text:"Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, RestartAFP); });
         $('#KILLAFP').click(function(){ swal({title:"Are you sure?",text:"AFP is shutdown automatically when the array is stopped.<br>Kill the AFP service only if you cannot stop your array normally!<br><br>Killing AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!<br><br>This action might corrupt AFP's CNID database.<br>In case of any problems, you can choose 'Wipe DB' in AFP settings.",type:"warning",html:true,showCancelButton:true}, KillAFP); });
         $('#WIPEDB').click(function(){ swal({title:"Are you sure?",text:"This action will wipe AFP's CNID database, if you're having problems.<br>DB rebuilding can cause slower (or faster) AFP performance at first.<br><br>Restarting AFP will cancel all running AFP file transfers.<br>Best to eject any active network shares before doing that!",type:"warning",html:true,showCancelButton:true}, WipeDB); });
         $('#RESETCONF').click(function(){ swal({title:"Are you sure?",text:"This action will return any existing AFP configuration to their defaults!",type:"warning",html:true,showCancelButton:true}, ResetConfig); });
     } else {
-        $('#RESTART').click(Restart);
+        $('#RESTART').click(RestartAFP);
         $('#KILLAFP').click(KillAFP);
         $('#WIPEDB').click(WipeDB);
         $('#RESETCONF').click(ResetConfig);
     }
 
     $('#SERVICE').change(checkRUNNING);
-
     checkRUNNING();
-
 });
 </script>

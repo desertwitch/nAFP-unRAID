@@ -3,21 +3,24 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "nafp">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.09.16">
+<!ENTITY version   "2024.11.30">
 <!ENTITY launch    "Settings/NAFPsettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/nAFP-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "nafp-2024.09.16-x86_64-1">
-<!ENTITY plgMD5    "50449db32c08e3be32f79dc9433ca138">
+<!ENTITY plgNAME   "nafp-2024.11.30-x86_64-1">
+<!ENTITY plgMD5    "21f8fc8c24c5b73e44135c10a47b11be">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/" min="6.10.0">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/144497-plugin-netatalk-afp-for-unraid-support-topic/" min="6.10.0" icon="handshake-o">
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2024.11.30
+- new: updated AFP backends to netatalk 4.0.7 (major upstream update)
+- fix: refactored the whole plugin to more current and overall improved standards
 ###2024.09.16
 - fix: reworked bash scripts to better standards with more safety for strange configurational states
 - release note: due to continued interest this plugin will NOT BE DEPRECATED as previously announced
@@ -59,7 +62,7 @@ if [ -x /etc/rc.d/rc.nafp ]; then
         echo "WARNING: The AFP installation script was not able to stop the services gracefully."
         echo "WARNING: IN CASE OF PROBLEMS, please REBOOT YOUR SYSTEM to complete any upgrades."
         echo "WARNING:"
-    fi 
+    fi
 fi
 killall afp-poller >/dev/null 2>&amp;1
 exit 0
@@ -70,9 +73,9 @@ exit 0
 install or upgrade dependency files
 -->
 
-<FILE Name="&plgPATH;/netatalk-3.1.18-x86_64-2_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
-<URL>&pkgURL;/netatalk-3.1.18-x86_64-2_slack15.1.txz</URL>
-<MD5>0f4f8855029631e1e942c9779c08a782</MD5>
+<FILE Name="&plgPATH;/netatalk-4.0.7-x86_64-2_slack15.1.txz" Min="6.13" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-4.0.7-x86_64-2_slack15.1.txz</URL>
+<MD5>12a47e02bbce4bcdfc797341c03dac27</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/openldap-2.4.59-x86_64-1_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
@@ -80,9 +83,9 @@ install or upgrade dependency files
 <MD5>b3b4e18f947abf013c1dfbfa136803cd</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/netatalk-3.1.18-x86_64-1_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
-<URL>&pkgURL;/netatalk-3.1.18-x86_64-1_slack15.0.txz</URL>
-<MD5>3067ed6151e520d10283a1e57f0f26a8</MD5>
+<FILE Name="&plgPATH;/netatalk-4.0.7-x86_64-2_slack15.0.txz" Min="6.10" Max="6.12.99" Run="upgradepkg --install-new">
+<URL>&pkgURL;/netatalk-4.0.7-x86_64-2_slack15.0.txz</URL>
+<MD5>b8b0f894de7a272856de4e0fb6486b59</MD5>
 </FILE>
 
 <!--
@@ -97,7 +100,7 @@ install or upgrade the plugin itself
 run the post-installation scripts
 -->
 <FILE Run="/bin/bash">
-<INLINE> 
+<INLINE>
 /etc/cron.daily/afp-poller conntest >/dev/null 2>&amp;1 &amp;
 echo ""
 echo "-------------------------------------------------------------"
@@ -123,7 +126,7 @@ if [ -x /etc/rc.d/rc.nafp ]; then
         echo "WARNING: The AFP uninstallation script was not able to stop the services gracefully."
         echo "WARNING: IN CASE OF PROBLEMS, please REBOOT YOUR SYSTEM to remove any remaining packages."
         echo "WARNING:"
-    fi 
+    fi
 fi
 killall afp-poller >/dev/null 2>&amp;1
 
@@ -156,9 +159,7 @@ else
     echo "WARNING:"
     echo "WARNING: This is not a problem except for taking up disk space."
     echo "WARNING: AFP database remains located at: /mnt/user/system/nafp"
-    echo ""
 fi
- 
 
 echo ""
 echo "-----------------------------------------------------------"

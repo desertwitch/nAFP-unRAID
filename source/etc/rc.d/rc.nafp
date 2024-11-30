@@ -1,18 +1,26 @@
 #!/bin/bash
-# Start/stop/restart the netatalk daemon.
-
+#
+# Copyright Derek Macias (parts of code from NUT package)
+# Copyright macester (parts of code from NUT package)
+# Copyright gfjardim (parts of code from NUT package)
+# Copyright SimonF (parts of code from NUT package)
+# Copyright Lime Technology (any and all other parts of Unraid)
+#
+# Copyright Patrick J. Volkerding, Sebeka, MN, USA (as original author)
+# Copyright desertwitch (as maintainer of this file within the project)
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License 2
+# as published by the Free Software Foundation.
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
 PROG="nafp"
 PLGPATH="/boot/config/plugins/$PROG"
 
 netatalk_start() {
   if [ -x /usr/sbin/netatalk ]; then
-
-    LINES="$(grep "^[^;]" /etc/netatalk/afp.conf | wc -l)"
-    if [ "$LINES" -lt "2" ]; then
-      echo "AFP service is not configured.... exiting."
-      exit
-    fi 
-
     echo "Starting AFP service...  /usr/sbin/netatalk"
     /usr/sbin/netatalk
   fi
@@ -135,7 +143,7 @@ netatalk_writeconfig() {
     mkdir $PLGPATH/netatalk
   fi
 
-  cp -rf /etc/netatalk/* $PLGPATH/netatalk >/dev/null 2>&1
+  cp -rf /etc/netatalk/* $PLGPATH/netatalk/ >/dev/null 2>&1
 
   # set up permissions
   if [ -d /etc/netatalk ]; then

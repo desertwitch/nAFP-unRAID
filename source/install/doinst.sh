@@ -21,10 +21,10 @@ if [ ! -d $BOOT/netatalk ]; then
 fi
 
 # copy default conf files to flash drive, if no backups exist there
-cp -nr $DOCROOT/netatalk/* $BOOT/netatalk >/dev/null 2>&1
+cp -nr $DOCROOT/netatalk/* $BOOT/netatalk/ >/dev/null 2>&1
 
 # copy conf files from flash drive to local system, for our services to use
-cp -rf $BOOT/netatalk/* /etc/netatalk >/dev/null 2>&1
+cp -rf $BOOT/netatalk/* /etc/netatalk/ >/dev/null 2>&1
 
 # set up plugin-specific polling tasks
 rm -f /etc/cron.daily/afp-poller >/dev/null 2>&1

@@ -3,8 +3,29 @@ Title="AFP Configuration"
 Tag="cog"
 Markdown="false"
 ---
-<link rel="stylesheet" href="<?=autov('/plugins/nafp/css/codemirror/codemirror.min.css');?>">
-<link rel="stylesheet" href="<?=autov('/plugins/nafp/css/codemirror/dracula.min.css');?>">
+<?
+/* Copyright Derek Macias (parts of code from NUT package)
+ * Copyright macester (parts of code from NUT package)
+ * Copyright gfjardim (parts of code from NUT package)
+ * Copyright SimonF (parts of code from NUT package)
+ * Copyright Dan Landon (parts of code from Web GUI)
+ * Copyright Bergware International (parts of code from Web GUI)
+ * Copyright Lime Technology (any and all other parts of Unraid)
+ *
+ * Copyright desertwitch (as author and maintainer of this file)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License 2
+ * as published by the Free Software Foundation.
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ */
+?>
+<link type="text/css" rel="stylesheet" href="<?=autov('/webGui/styles/jquery.filetree.css');?>">
+<link type="text/css" rel="stylesheet" href="<?=autov('/plugins/nafp/css/codemirror.min.css');?>">
+<link type="text/css" rel="stylesheet" href="<?=autov('/plugins/nafp/css/dracula.min.css');?>">
 
 <style type="text/css">
     .CodeMirror { border: 1px solid #eee; cursor: text; margin-top: 15px; margin-bottom: 10px; }
@@ -12,20 +33,20 @@ Markdown="false"
     .errortext {color: #EF3D47;display: none;}
     .fileTree {color:#486dba;width:305px;max-height:150px;overflow:scroll;position:absolute;z-index:100;display:none;}
 </style>
-<link type="text/css" rel="stylesheet" href="<?=autov('/webGui/styles/jquery.filetree.css');?>">
-<span style="float:right;margin-right:10px"><a href="https://netatalk.sourceforge.io/3.1/htmldocs/afp.conf.5.html" target="_blank" title="AFP Configuration Manual"><i class="fa fa-file-text-o"></i> <u>Configuration Manual</u></a></span>
+
+<span style="float:right;margin-right:10px"><a href="https://netatalk.io/stable/htmldocs/afp.conf.5" target="_blank" title="AFP Configuration Manual"><i class="fa fa-file-text-o"></i> <u>Configuration Manual</u></a></span>
 <br>
 <dl>
-<dt>
-<div style="color:red">Do <strong><u>NOT</u></strong> define/configure your user shares with any locations <strong><u>/mnt/disk[...]</u></strong></div>
-<div style="color:green"><strong>Please always make sure to define your user shares with locations <u>/mnt/user/</u>[...]</strong></div>
-<br>
-<div><strong>You authenticate to AFP with your regular UNRAID user credentials.</strong></div>
-<div>By default all user accounts have access, you can limit this per share with 'valid users'.</div>
-<div>You only <u>need</u> to change the configuration file 'afp.conf', the others offer expert settings.</div>
-</dt>
-<dd>
-<strong>Configuration Examples:</strong>
+    <dt>
+        <div style="color:red">Do <strong><u>NOT</u></strong> define/configure your user shares with any locations <strong><u>/mnt/disk[...]</u></strong></div>
+        <div style="color:green"><strong>Please always make sure to define your user shares with locations <u>/mnt/user/</u>[...]</strong></div>
+        <br>
+        <div><strong>You authenticate to AFP with your regular UNRAID user credentials.</strong></div>
+        <div>By default all user accounts have access, you can limit this per share with 'valid users'.</div>
+        <div>You only <u>need</u> to change the configuration file 'afp.conf', the others offer expert settings.</div>
+    </dt>
+    <dd>
+        <strong>Configuration Examples:</strong>
 <pre>
 [photos]
 path = /mnt/user/photos
@@ -36,42 +57,32 @@ path = /mnt/user/tvshows
 time machine = no
 valid users = Peter Sarah
 </pre>
-</dd>
+    </dd>
 </dl>
-<blockquote class="inline_help">
-    <p>AFP configuration editor is used to set all configuration parameters.</p>
-</blockquote>
 
 <form id="editform" method="POST">
-<img id="editfolder" style="cursor:pointer;margin-left: 10px;" src="/webGui/images/explore.png" >
+    <img id="editfolder" style="cursor:pointer;margin-left: 10px;" src="/webGui/images/explore.png" >
+    <input id="editfile" type="text" name="editfile" value="" readonly="" data-picktop="/etc/netatalk" data-pickcloseonfile="true" data-pickfilter="conf" data-pickroot="/etc/netatalk" data-pickfolders="false" required="required" >
 
-<input id="editfile" type="text" name="editfile" value="" readonly="" data-picktop="/etc/netatalk" data-pickcloseonfile="true" data-pickfilter="conf" data-pickroot="/etc/netatalk" data-pickfolders="false" required="required" >
-
-<textarea id="editdata" name="editdata" placeholder="Select a configuration file to modify."></textarea>
-<input type="hidden" name="commit" value="1" />
-<dl>
-    <dt></dt>
-    <dd><input type="button" value="Save" id="btnSubmit" title="Save the configuration changes." />
-    <input type="button" value="Cancel" id="btnCancel" />
-    </dd>
+    <textarea id="editdata" name="editdata" placeholder="Select a configuration file to modify."></textarea>
+    <input type="hidden" name="commit" value="1" />
+    <dl>
+        <dt></dt>
+        <dd>
+            <input type="button" value="Save" id="btnSubmit" />
+            <input type="button" value="Cancel" id="btnCancel" />
+        </dd>
+    </dl>
 </form>
-</dl>
-
-<blockquote class="inline_help">
-    <p>The <strong>Save</strong> button saves any configuration changes made.</p>
-</blockquote>
-
-<script src="<?=autov('/plugins/nafp/js/codemirror/codemirror.min.js');?>"></script>
-
-<script src="<?=autov('/plugins/nafp/js/codemirror/autorefresh.min.js');?>"></script>
 
 <script src="<?=autov('/webGui/javascript/jquery.filetree.js');?>"></script>
-
+<script src="<?=autov('/plugins/nafp/js/codemirror.min.js');?>"></script>
+<script src="<?=autov('/plugins/nafp/js/autorefresh.min.js');?>"></script>
+<script src="<?=autov('/plugins/nafp/js/properties.min.js');?>"></script>
 
 <script>
 $(function(){
     $('#btnCancel').click(function() {
-        $.cookie('one', 'tab1', { expires:null, path: '/'});
         location = '/Settings/NAFPsettings';
     });
 
@@ -79,19 +90,10 @@ $(function(){
         theme: '<?=($display["theme"] == 'white' || $display["theme"] == 'azure') ? "default" : "dracula";?>',
         mode: 'properties',
         lineNumbers: true,
-        autoRefresh: true,
-        gutters: ['CodeMirror-linenumbers'],
-        extraKeys: {
-            'Ctrl-Space': 'autocomplete'
-        },
-        hintOptions: {}
+        autoRefresh: true
     });
 
     editor.setSize(null, 600);
-
-    $('#tab2').click(function () {
-        editor.refresh();
-    });
 
     $('#editfile').fileTreeAttach(null, null, function(file) {
         $('#editfile').val(file);
@@ -103,6 +105,12 @@ $(function(){
                 editor.setValue(data);
             }
         );
+    });
+
+    $('#editfile').val("/etc/netatalk/afp.conf");
+    var EditfileDefault = $('#editfile').val();
+    $.getJSON('/plugins/nafp/include/nafp_edit.php', {editfile: EditfileDefault}, function (data) {
+            editor.setValue(data);
     });
 
     // save config

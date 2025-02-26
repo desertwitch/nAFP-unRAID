@@ -18,6 +18,8 @@
 
 <CHANGES>
 ## netatalk - AFP for UNRAID
+###2025.02.26
+- fix: future-proofing changes to base plugin structure
 ###2024.11.30
 - new: updated AFP backends to netatalk 4.0.7 (major upstream update)
 - fix: refactored the whole plugin to more current and overall improved standards
@@ -101,7 +103,6 @@ run the post-installation scripts
 -->
 <FILE Run="/bin/bash">
 <INLINE>
-/etc/cron.daily/afp-poller conntest >/dev/null 2>&amp;1 &amp;
 echo ""
 echo "-------------------------------------------------------------"
 echo " netatalk - AFP for UNRAID has been installed."

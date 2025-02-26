@@ -19,7 +19,6 @@
  */
 $nafp_cfg          = parse_ini_file("/boot/config/plugins/nafp/nafp.cfg");
 $nafp_service      = trim(isset($nafp_cfg['SERVICE']) ? htmlspecialchars($nafp_cfg['SERVICE']) : 'disable');
-$nafp_metricsapi   = trim(isset($nafp_cfg['METRICSAPI']) ? htmlspecialchars($nafp_cfg['METRICSAPI']) : 'enable');
 $nafp_running      = !empty(shell_exec("pgrep -x netatalk 2>/dev/null"));
 $nafp_installed_backend = htmlspecialchars(trim(shell_exec("find /var/log/packages/ -type f -iname 'netatalk*' -printf '%f\n' 2>/dev/null") ?? "n/a"));
 ?>

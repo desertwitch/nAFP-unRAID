@@ -53,14 +53,18 @@ require_once '/usr/local/emhttp/plugins/nafp/include/nafp_config.php'; ?>
 
     <dl>
         <dt>
-            <input id="RESETCONF" class="nafp-run" type="button" value="Reset Config">
-            <input id="KILLAFP" type="button" value="Kill AFP" style="margin-bottom:8px;">
-            <input id="WIPEDB" type="button" value="Wipe DB" style="margin-bottom:8px;">
+            <span>
+                <input id="RESETCONF" class="nafp-run" type="button" value="Reset Config">
+                <input id="KILLAFP" type="button" value="Kill AFP" style="margin-bottom:8px;">
+                <input id="WIPEDB" type="button" value="Wipe DB" style="margin-bottom:8px;">
+            </span>
         </dt>
         <dd>
-            <input type="submit" id="btnApply" name="#apply" value="Apply">
-            <input type="button" value="Done" onclick="done()">
-            <input id="RESTART" type="button" value="Restart AFP" style="margin-bottom:8px;">
+            <span>
+                <input type="submit" id="btnApply" name="#apply" value="Apply">
+                <input type="button" value="Done" onclick="done()">
+                <input id="RESTART" type="button" value="Restart AFP" style="margin-bottom:8px;">
+            </span>
         </dd>
     </dl>
 

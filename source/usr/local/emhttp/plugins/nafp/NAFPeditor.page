@@ -69,8 +69,10 @@ valid users = Peter Sarah
     <dl>
         <dt></dt>
         <dd>
-            <input type="button" value="Save" id="btnSubmit" />
-            <input type="button" value="Cancel" id="btnCancel" />
+            <span>
+                <input type="button" value="Save" id="btnSubmit" />
+                <input type="button" value="Cancel" id="btnCancel" />
+            </span>
         </dd>
     </dl>
 </form>
